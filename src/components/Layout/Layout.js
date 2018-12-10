@@ -1,6 +1,8 @@
 import React from 'react';
 import Auxx from '../../hoc/Auxx';
 import classes from './Layout.css';
+import Toolbar from '../Navigation/Toolbar/Toolbar';
+import SideDrawer from '../Navigation/Toolbar/SideDrawer/SideDrawer';
 
 
 
@@ -9,9 +11,8 @@ const layout =(props)=>{
 
     return(
         <Auxx>
-        <div>
-            Toolbar, sidebar and Backdrop
-        </div>
+        <Toolbar/>
+        <SideDrawer />
         <main className={classes.Content}>
             {props.children}
         </main>
