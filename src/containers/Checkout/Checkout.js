@@ -64,7 +64,7 @@ class Checkout extends Component{
   
 
     render(){
-        console.log('The Total Price of BUrger', this.state.price)
+        console.log('The Total Price of Burger', this.state.price)
 
         return(
             <div>
