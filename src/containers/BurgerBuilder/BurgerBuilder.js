@@ -10,7 +10,7 @@ import axios from '../../axios-orders';
 
 import Loading from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import {addIngredient, removeIngredient } from '../../store/actions/index';
+import {addIngredient, removeIngredient, _initIngredients } from '../../store/actions/index';
 
 
 
@@ -23,24 +23,11 @@ class BurgerBuilder extends Component {
     state = {
         
         purchising: false,
-        loading: false,
-        error: null
     }
 
 
     componentDidMount(){
-        // axios.get('https://react-my-burger-d3658.firebaseio.com/ingredients.json')
-        // .then(response =>{
-        //     this.setState({
-        //         ingredients: response.data
-        //     })
-
-        // })
-        // .catch(error => {
-        //     this.setState({
-        //         error: true,
-        //     })
-        // })
+        this.props.oninInitIngredients();
     }
 
     updatePurchaseState (ingredients) {
@@ -91,7 +78,7 @@ class BurgerBuilder extends Component {
         }
         let orderSummary = null;
         
-        let burgar = this.state.error ? <p>ingredients cant be loaded</p> :  <Loading />;
+        let burgar = this.props.error ? <p>ingredients cant be loaded</p> :  <Loading />;
 
         if(this.props.ings){
             burgar = (
@@ -144,6 +131,7 @@ const mapStateToProps = (state) =>{
     return {
         ings: state.ingredients,
         price: state.totalPrice,
+        error: state.error,
 
     };
 }
@@ -152,7 +140,8 @@ const mapDispatchToProps = (dispatch) => {
 
     return {
         onIngredientAdded: (ingName)=> dispatch(addIngredient(ingName)),
-        onIngredientRemoved: (ingName)=> dispatch(removeIngredient(ingName))
+        onIngredientRemoved: (ingName)=> dispatch(removeIngredient(ingName)),
+        oninInitIngredients: ()=>dispatch( _initIngredients()),
 
     }
 }
