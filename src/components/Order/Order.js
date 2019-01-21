@@ -25,7 +25,7 @@ const order =(props)=>{
         {cur.name} ({cur.amount})</span>;
     })
 
-    const newPrice = parseInt(props.price).toFixed(2)
+    const newPrice = props.price.toFixed(2)
 return(
     <div className={classes.Order}>
         <p>Ingredients: {ingredientOutput} </p>

@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from './ContactData/ContactData';
 
 
+
 class Checkout extends Component{
     
-    
+   
+
+
      checkoutCancledHandler = ()=>{
         this.props.history.goBack();
 
@@ -25,19 +28,31 @@ class Checkout extends Component{
   
 
     render(){
-        console.log('The Total Price of Burger', this.props.price)
+        
+        let summary = <Redirect to='/' />
+        
+        if(this.props.ings){
+            const purchasedRedirect = this.props.purch ? <Redirect to ='/'/> : null;
+            summary = (
+                <div>
+                    {purchasedRedirect}
+                    <CheckoutSummary 
+                    ingredients={this.props.ings}
+                    checkoutCanceled= {this.checkoutCancledHandler}
+                    checkoutContinued= {this.checkoutContinuedHandler}/>
+                    <Route 
+                    path={`${this.props.match.path}/contact-data`}
+                    component ={ContactData}/>
 
-        return(
-            <div>
-                <CheckoutSummary 
-                ingredients={this.props.ings}
-                checkoutCanceled= {this.checkoutCancledHandler}
-                checkoutContinued= {this.checkoutContinuedHandler}/>
-                <Route 
-                path={`${this.props.match.path}/contact-data`}
-                component ={ContactData}/>
-            </div>
-        );
+                </div>
+                
+            );
+
+        }
+        return summary;
+                
+            
+        
     }
 }
 
@@ -46,10 +61,13 @@ const mapPropsToState = (state) => {
 
 
     return {
-        ings: state.ingredients,
-        price: state.totalPprice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        purch: state.order.purchased,
     }
 }
+
+
 
 
 export default connect(mapPropsToState, null)(Checkout);
