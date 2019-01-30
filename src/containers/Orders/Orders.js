@@ -20,7 +20,7 @@ class Orders extends Component {
     render(){
         let orders = <Spinner />;
         if(!this.props.loading){
-            console.log('props', this.props)
+           
            orders= this.props.orders.map(cur=> (
                 <Order 
                 key={cur.id}
@@ -29,7 +29,7 @@ class Orders extends Component {
            ))
         }
 
-        console.log(this.props.orders)
+       
         return(
             <div>
                 {orders}

@@ -64,7 +64,7 @@ export const auth = (email, password, isSignUp) => {
         authData)
         .then(response => {
             const experitionDate = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-            console.log(response);
+            
             localStorage.setItem('token', response.data.idToken);
             localStorage.setItem('expiritaionDate', experitionDate );
             localStorage.setItem('userId', response.data.localId );
@@ -72,7 +72,7 @@ export const auth = (email, password, isSignUp) => {
             dispatch(checkAuthTimeout(response.data.expiresIn))
         })
         .catch(err => {
-            console.log(err)
+            
             dispatch(authFail(err.response.data.error))
         })
 
