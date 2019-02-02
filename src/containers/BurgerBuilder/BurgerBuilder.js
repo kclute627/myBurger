@@ -18,7 +18,7 @@ import {addIngredient, removeIngredient, _initIngredients, purchaseInit, setAuth
 
 
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
     state = {
         
